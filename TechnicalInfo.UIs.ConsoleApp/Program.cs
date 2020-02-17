@@ -2,7 +2,7 @@
 
 namespace TechnicalInfo.UIs.ConsoleApp
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
