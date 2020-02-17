@@ -1,4 +1,4 @@
-﻿namespace TechnicalInfo.Models
+﻿namespace TechnicalInfo.Domain.Models
 {
     public class RamModel
     {
