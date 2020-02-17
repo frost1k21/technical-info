@@ -2,7 +2,7 @@
 {
     public class CpuModel
     {
-        public string Name { get; private set; }
-        public int Frequency { get; private set; }
+        public string Name { get; set; }
+        public int Frequency { get; set; }
     }
 }

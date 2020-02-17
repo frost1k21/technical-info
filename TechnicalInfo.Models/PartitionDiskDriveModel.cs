@@ -3,7 +3,7 @@ namespace TechnicalInfo.Domain.Models
 {
     public class PartitionDiskDriveModel
     {
-        public string Name { get; private set; }
-        public ulong Size { get; private set; }
+        public string Name { get; set; }
+        public ulong Size { get; set; }
     }
 }

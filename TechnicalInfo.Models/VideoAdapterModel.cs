@@ -2,7 +2,7 @@
 {
     public class VideoAdapterModel
     {
-        public string Name { get; private set; }
-        public ulong Memory { get; private set; }
+        public string Name { get; set; }
+        public ulong Memory { get; set; }
     }
 }

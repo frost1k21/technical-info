@@ -1,12 +1,21 @@
 ﻿using System;
+using System.Threading.Tasks;
+using TechnicalInfo.Infastructure.Interfaces;
+using TechnicalInfo.Infrastructure.Wmi;
 
 namespace TechnicalInfo.UIs.ConsoleApp
 {
     static class Program
     {
-        static void Main(string[] args)
+        private static string wsName = "ws555a";
+
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IInfoCollector infoCollector = new WmiInfoCollector();
+
+            var motherboard = await infoCollector.GetMotherboard(wsName);
+
+            Console.WriteLine($"Motherboard: {motherboard.Model} - Manufacturer: {motherboard.Manufacturer}");
         }
     }
 }
