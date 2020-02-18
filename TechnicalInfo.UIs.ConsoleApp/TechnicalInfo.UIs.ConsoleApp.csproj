@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infastructure.Interfaces.csproj" />
+    <ProjectReference Include="..\TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infrastructure.Interfaces.csproj" />
     <ProjectReference Include="..\TechnicalInfo.Infrastructure.Wmi\TechnicalInfo.Infrastructure.Wmi.csproj" />
   </ItemGroup>
 

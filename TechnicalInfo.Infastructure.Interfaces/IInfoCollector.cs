@@ -1,11 +1,13 @@
 ﻿
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TechnicalInfo.Domain.Models;
 
-namespace TechnicalInfo.Infastructure.Interfaces
+namespace TechnicalInfo.Inrfastructure.Interfaces
 {
     public interface IInfoCollector
     {
-        Task<MotherboardModel> GetMotherboard(string wsName);
+        Task<IEnumerable<T>> Get<T>(string wsName) where T: class, new();
+        Task<WorkStationModel> GetWorkStationInfo(string wsName);
     }
 }

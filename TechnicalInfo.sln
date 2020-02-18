@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UIs", "UIs", "{FB332BD6-05B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.ConsoleApp", "TechnicalInfo.UIs.ConsoleApp\TechnicalInfo.UIs.ConsoleApp.csproj", "{2F9F30EE-5B5B-4BFB-9677-FC0792EC3851}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.Infastructure.Interfaces", "TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infastructure.Interfaces.csproj", "{259134F5-7FCB-436D-805D-3B9ACDB82EA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.Infrastructure.Interfaces", "TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infrastructure.Interfaces.csproj", "{259134F5-7FCB-436D-805D-3B9ACDB82EA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using TechnicalInfo.Infastructure.Interfaces;
 using TechnicalInfo.Infrastructure.Wmi;
+using TechnicalInfo.Inrfastructure.Interfaces;
+using TechnicalInfo.Domain.Models;
 
 namespace TechnicalInfo.UIs.ConsoleApp
 {
@@ -13,9 +15,15 @@ namespace TechnicalInfo.UIs.ConsoleApp
         {
             IInfoCollector infoCollector = new WmiInfoCollector();
 
-            var motherboard = await infoCollector.GetMotherboard(wsName);
+            var motherboard = await infoCollector.Get<MotherboardModel>(wsName);
+            var userName = await infoCollector.Get<SystemUserName>(wsName);
+            var operatingSystem = await infoCollector.Get<OperatingSystemModel>(wsName);
+            var videoAdapter = await infoCollector.Get<VideoAdapterModel>(wsName);
 
-            Console.WriteLine($"Motherboard: {motherboard.Model} - Manufacturer: {motherboard.Manufacturer}");
+            Console.WriteLine($"Motherboard: {motherboard.FirstOrDefault().Model} - Manufacturer: {motherboard.FirstOrDefault().Manufacturer}");
+            Console.WriteLine($"User Login: {userName.FirstOrDefault().Login}");
+            Console.WriteLine($"OS: {operatingSystem.FirstOrDefault().Name}");
+            Console.WriteLine($"Video: {videoAdapter.FirstOrDefault().Name}");
         }
     }
 }
