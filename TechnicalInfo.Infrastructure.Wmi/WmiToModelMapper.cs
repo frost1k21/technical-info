@@ -16,7 +16,8 @@ namespace TechnicalInfo.Infrastructure.Wmi
                     return motherboard as T;
 
                 case CpuModel cpu:
-                    cpu.Name = managementBaseObject.SafeGetProperty("Name");
+                    cpu.Name = managementBaseObject.SafeGetProperty("Name").Split('@')[0].Trim();
+                    cpu.Frequency = int.Parse(managementBaseObject.SafeGetProperty("MaxClockSpeed"));
                     return cpu as T;
 
                 case RamModel ram:
