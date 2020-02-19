@@ -21,10 +21,12 @@ namespace TechnicalInfo.Infrastructure.Wmi
                     return cpu as T;
 
                 case RamModel ram:
+                    ram.Capacity = ulong.Parse(managementBaseObject.SafeGetProperty("capacity"));
                     return ram as T;
 
                 case PartitionDiskDriveModel partitionDiskDrive:
                     partitionDiskDrive.Name = managementBaseObject.SafeGetProperty("Name");
+                    partitionDiskDrive.Size = ulong.Parse(managementBaseObject.SafeGetProperty("Size"));
                     return partitionDiskDrive as T;
 
                 case OperatingSystemModel operatingSystem:
@@ -39,6 +41,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
 
                 case VideoAdapterModel videoAdapter:
                     videoAdapter.Name = managementBaseObject.SafeGetProperty("Name");
+                    videoAdapter.Memory = ulong.TryParse(managementBaseObject.SafeGetProperty("AdapterRAM"), out ulong realMemory) ? realMemory : 0;
                     return videoAdapter as T;
 
                 default:

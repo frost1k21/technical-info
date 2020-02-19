@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace TechnicalInfo.Domain.Models
 {
     public class PartitionDiskDriveModel
