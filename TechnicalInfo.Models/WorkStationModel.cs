@@ -10,7 +10,7 @@ namespace TechnicalInfo.Domain.Models
         public SystemUserName SystemUser { get; set; }
         public OperatingSystemModel OperatingSystem { get; set; }
         public List<RamModel> Rams { get; set; }
-        public List<PartitionDiskDriveModel> PartitionDisks { get; set; }
+        public List<DiskDriveModel> PartitionDisks { get; set; }
         public List<VideoAdapterModel> VideoAdapters { get; set; }
     }
 }

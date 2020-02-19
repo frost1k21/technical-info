@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using TechnicalInfo.Infrastructure.Wmi;
 using TechnicalInfo.Inrfastructure.Interfaces;
-using TechnicalInfo.Domain.Models;
-using System.Diagnostics;
 
 namespace TechnicalInfo.UIs.ConsoleApp
 {
@@ -13,34 +10,19 @@ namespace TechnicalInfo.UIs.ConsoleApp
         private static string wsNameWithXp = "ws1261";
         private static string wsNameWithWin7 = "ws555a";
         private static string wsNameWithWin10 = "ws1674";
+        private static string ws007 = "ws007";
+        private static string ws2473 = "ws2473";
 
         private static IInfoCollector infoCollector = new WmiInfoCollector();
 
         static async Task Main(string[] args)
         {
-            //await GetData(wsNameWithXp);
-            //await GetData(wsNameWithWin7);
-            //await GetData(wsNameWithWin10);
 
+            await GetWorkstationInfo(wsNameWithXp);
             await GetWorkstationInfo(wsNameWithWin7);
-        }
-
-        static async Task GetData(string wsName)
-        {
-            var cpu = await infoCollector.Get<CpuModel>(wsName);
-            var motherboard = await infoCollector.Get<MotherboardModel>(wsName);
-            var userName = await infoCollector.Get<SystemUserName>(wsName);
-            var operatingSystem = await infoCollector.Get<OperatingSystemModel>(wsName);
-            var videoAdapter = await infoCollector.Get<VideoAdapterModel>(wsName);
-            var ram = await infoCollector.Get<RamModel>(wsName);
-
-            Console.WriteLine($"{wsName}:"); 
-            Console.WriteLine($"Процессор: {cpu.FirstOrDefault()?.Name}. Частота: {cpu.FirstOrDefault()?.Frequency} MHz");
-            Console.WriteLine($"Материнская плата: {motherboard.FirstOrDefault()?.Model} - Производитель: {motherboard.FirstOrDefault()?.Manufacturer}");
-            Console.WriteLine($"Пользователь: {userName.FirstOrDefault()?.Login}");
-            Console.WriteLine($"ОС: {operatingSystem.FirstOrDefault()?.Name}");
-            Console.WriteLine($"Видео: {videoAdapter.FirstOrDefault()?.Name}");
-            Console.WriteLine();
+            await GetWorkstationInfo(wsNameWithWin10);
+            await GetWorkstationInfo(ws007);
+            await GetWorkstationInfo(ws2473);
         }
 
         static async Task GetWorkstationInfo(string wsName)

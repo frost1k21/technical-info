@@ -24,9 +24,9 @@ namespace TechnicalInfo.Infrastructure.Wmi
                     ram.Capacity = ulong.Parse(managementBaseObject.SafeGetProperty("capacity"));
                     return ram as T;
 
-                case PartitionDiskDriveModel partitionDiskDrive:
-                    partitionDiskDrive.Name = managementBaseObject.SafeGetProperty("Name");
-                    partitionDiskDrive.Size = ulong.Parse(managementBaseObject.SafeGetProperty("Size"));
+                case DiskDriveModel partitionDiskDrive:
+                    partitionDiskDrive.Name = managementBaseObject.SafeGetProperty("Model");
+                    partitionDiskDrive.Size = ulong.TryParse(managementBaseObject.SafeGetProperty("Size"), out ulong realSize) ? realSize : 0;
                     return partitionDiskDrive as T;
 
                 case OperatingSystemModel operatingSystem:

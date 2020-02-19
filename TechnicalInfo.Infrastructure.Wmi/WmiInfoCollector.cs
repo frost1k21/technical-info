@@ -21,7 +21,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
         private string _computerSystem = "Win32_ComputerSystem";
         private string _operatingSystem = "Win32_OperatingSystem";
         private string _processor = "Win32_Processor";
-        private string _logicalDisk = "Win32_LogicalDisk";
+        private string _logicalDisk = "Win32_DiskDrive";
 
         #endregion
 
@@ -35,7 +35,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
             var videoAdapter = Get<VideoAdapterModel>(wsName);
             var userName = Get<SystemUserName>(wsName);
             var memory = Get<RamModel>(wsName);
-            var partitions = Get<PartitionDiskDriveModel>(wsName);
+            var partitions = Get<DiskDriveModel>(wsName);
 
             Task.WaitAll(motherboard, cpu, operatingSystem, videoAdapter, userName);
 
@@ -47,7 +47,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
                 SystemUser = userName.Result.FirstOrDefault(),
                 VideoAdapters = videoAdapter.Result.Where(v => v.Memory != 0).ToList(),
                 Rams = memory.Result.ToList(),
-                PartitionDisks = partitions.Result.ToList()
+                PartitionDisks = partitions.Result.Where(p => p.Size != 0).ToList()
             };
 
             return Task.FromResult(workStation);
@@ -102,7 +102,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
                     path = _computerSystem;
                     break;
 
-                case PartitionDiskDriveModel partitionDiskDrive:
+                case DiskDriveModel partitionDiskDrive:
                     path = _logicalDisk;
                     break;
 
