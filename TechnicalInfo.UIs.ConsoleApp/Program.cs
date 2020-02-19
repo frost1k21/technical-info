@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using TechnicalInfo.Domain.Models;
+using TechnicalInfo.Infrastructure.Interfaces;
 using TechnicalInfo.Infrastructure.Wmi;
-using TechnicalInfo.Inrfastructure.Interfaces;
 
 namespace TechnicalInfo.UIs.ConsoleApp
 {
@@ -11,41 +12,44 @@ namespace TechnicalInfo.UIs.ConsoleApp
         private static string wsNameWithWin7 = "ws555a";
         private static string wsNameWithWin10 = "ws1674";
         private static string ws007 = "ws007";
-        private static string ws2473 = "ws2473";
 
-        private static IInfoCollector infoCollector = new WmiInfoCollector();
+        private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007 };
+
+        private static IInfoCollectorService wmiInfoCollectorService = new WmiInfoCollectorService();
 
         static async Task Main(string[] args)
         {
-
-            await GetWorkstationInfo(wsNameWithXp);
-            await GetWorkstationInfo(wsNameWithWin7);
-            await GetWorkstationInfo(wsNameWithWin10);
-            await GetWorkstationInfo(ws007);
-            await GetWorkstationInfo(ws2473);
+            Console.Write("Сейчас будет собираться информация\nНажмите на клавишу...");
+            Console.ReadLine();
+            await GetInfoFromService(wsNames);
+        }
+        
+        static async Task GetInfoFromService(string[] wsNames)
+        {
+            var result = await wmiInfoCollectorService.GetComputersInfo(wsNames);
+            result.ForEach(PrintInfo);
         }
 
-        static async Task GetWorkstationInfo(string wsName)
+        private static void PrintInfo(WorkStationModel model)
         {
-            var result = await infoCollector.GetWorkStationInfo(wsName);
-            Console.WriteLine($"{wsName}");
-            Console.WriteLine($"Процессор: {result.Cpu.Name}. Частота: {result.Cpu.Frequency} MHz");
-            Console.WriteLine($"Материнская плата: {result.Motherboard.Model} - Производитель: {result.Motherboard.Manufacturer}");
-            Console.WriteLine($"Пользователь: {result.SystemUser.Login}");
-            Console.WriteLine($"ОС: {result.OperatingSystem.Name}");
+            Console.WriteLine($"{model.WsName}");
+            Console.WriteLine($"Процессор: {model.Cpu.Name}. Частота: {model.Cpu.Frequency} MHz");
+            Console.WriteLine($"Материнская плата: {model.Motherboard.Model} - Производитель: {model.Motherboard.Manufacturer}");
+            Console.WriteLine($"Пользователь: {model.SystemUser.Login}");
+            Console.WriteLine($"ОС: {model.OperatingSystem.Name}");
             Console.WriteLine("Видео:");
-            result.VideoAdapters.ForEach(x =>
+            model.VideoAdapters.ForEach(x =>
             {
                 Console.WriteLine($"\t{x.Name}");
                 Console.WriteLine($"\t{x.Memory / Math.Pow(1024, 2)} Mb");
             });
             Console.WriteLine("ОЗУ:");
-            result.Rams.ForEach(x =>
+            model.Rams.ForEach(x =>
             {
                 Console.WriteLine($"\t{x.Capacity / Math.Pow(1024, 2)} Mb");
             });
             Console.WriteLine("Разделы:");
-            result.PartitionDisks.ForEach(x =>
+            model.PartitionDisks.ForEach(x =>
             {
                 Console.WriteLine($"\t{x.Name}");
                 Console.WriteLine($"\t{x.Size / Math.Pow(1024, 3):0.##} Gb");

@@ -41,6 +41,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
 
             var workStation = new WorkStationModel()
             {
+                WsName = wsName,
                 Cpu = cpu.Result.FirstOrDefault(),
                 Motherboard = motherboard.Result.FirstOrDefault(),
                 OperatingSystem = operatingSystem.Result.FirstOrDefault(),

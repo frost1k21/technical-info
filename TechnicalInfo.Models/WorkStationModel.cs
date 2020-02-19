@@ -5,6 +5,7 @@ namespace TechnicalInfo.Domain.Models
 {
     public class WorkStationModel
     {
+        public string WsName { get; set; }
         public CpuModel Cpu { get; set; }
         public MotherboardModel Motherboard { get; set; }
         public SystemUserName SystemUser { get; set; }
