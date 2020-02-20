@@ -4,5 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SomeResult\SomeResult.csproj" />
+    <ProjectReference Include="..\TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infrastructure.Interfaces.csproj" />
+    <ProjectReference Include="..\TechnicalInfo.Infrastructure.Wmi\TechnicalInfo.Infrastructure.Wmi.csproj" />
+    <ProjectReference Include="..\TechnicalInfo.Models\TechnicalInfo.Domain.Models.csproj" />
+  </ItemGroup>
+
 
 </Project>
