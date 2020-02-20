@@ -5,6 +5,7 @@ using System.Management;
 using System.Threading.Tasks;
 using TechnicalInfo.Domain.Models;
 using TechnicalInfo.Inrfastructure.Interfaces;
+using SomeResult;
 
 namespace TechnicalInfo.Infrastructure.Wmi
 {
@@ -27,7 +28,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
 
         #region Public Method(s)
 
-        public Task<WorkStationModel> GetWorkStationInfo(string wsName)
+        public Task<Result<WorkStationModel, string>> GetWorkStationInfo(string wsName)
         {
             var motherboard = Get<MotherboardModel>(wsName);
             var cpu = Get<CpuModel>(wsName);
@@ -39,34 +40,46 @@ namespace TechnicalInfo.Infrastructure.Wmi
 
             Task.WaitAll(motherboard, cpu, operatingSystem, videoAdapter, userName);
 
+            if (motherboard.Result.Error != null)
+                return Task.FromResult(new Result<WorkStationModel, string>() { Error = motherboard.Result.Error });
+
             var workStation = new WorkStationModel()
             {
                 WsName = wsName,
-                Cpu = cpu.Result.FirstOrDefault(),
-                Motherboard = motherboard.Result.FirstOrDefault(),
-                OperatingSystem = operatingSystem.Result.FirstOrDefault(),
-                SystemUser = userName.Result.FirstOrDefault(),
-                VideoAdapters = videoAdapter.Result.Where(v => v.Memory != 0).ToList(),
-                Rams = memory.Result.ToList(),
-                PartitionDisks = partitions.Result.Where(p => p.Size != 0).ToList()
+                Cpu = cpu.Result.Success.FirstOrDefault(),
+                Motherboard = motherboard.Result.Success.FirstOrDefault(),
+                OperatingSystem = operatingSystem.Result.Success.FirstOrDefault(),
+                SystemUser = userName.Result.Success.FirstOrDefault(),
+                VideoAdapters = videoAdapter.Result.Success.Where(v => v.Memory != 0).ToList(),
+                Rams = memory.Result.Success.ToList(),
+                PartitionDisks = partitions.Result.Success.Where(p => p.Size != 0).ToList()
             };
 
-            return Task.FromResult(workStation);
+            return Task.FromResult(new Result<WorkStationModel, string>() { Success = workStation });
 
         }
 
-        public Task<IEnumerable<T>> Get<T>(string wsName) where T : class, new()
+        public Task<Result<IEnumerable<T>, string>> Get<T>(string wsName) where T : class, new()
         {
             return Task.Run(() =>
             {
-                var scope = new ManagementScope(GetWmiPath(wsName));
-                var path = GetManagementPath<T>();
-                var options = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-                var managementClass = new ManagementClass(scope, path, options);
+                try
+                {
+                    var scope = new ManagementScope(GetWmiPath(wsName));
+                    var path = GetManagementPath<T>();
+                    var options = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+                    var managementClass = new ManagementClass(scope, path, options);
 
-                return managementClass.GetInstances()
-                    .Cast<ManagementBaseObject>()
-                    .Select(x => x.MapTo<T>());
+                    var successResult = managementClass.GetInstances()
+                        .Cast<ManagementBaseObject>()
+                        .Select(x => x.MapTo<T>());
+                    return Task.FromResult(new Result<IEnumerable<T>, string>() { Success = successResult });
+                }
+                catch (Exception e)
+                {
+                    return Task.FromResult(new Result<IEnumerable<T>, string>() { Error = $"{wsName} {e.Message}" });
+                }
+                
             });
         }
 

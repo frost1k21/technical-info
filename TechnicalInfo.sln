@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{B5DE0456
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkWsChecker", "..\RemotePrinter\NetworkWsChecker\NetworkWsChecker.csproj", "{91791242-3F7E-4F0E-8C2B-13B07D05D4D3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OptionType", "OptionType", "{3B126A8B-A403-469C-A0A5-54999B1C7965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeResult", "SomeResult\SomeResult.csproj", "{F1709AC6-0D2F-4E3E-81DA-671B4A158427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,10 @@ Global
 		{91791242-3F7E-4F0E-8C2B-13B07D05D4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91791242-3F7E-4F0E-8C2B-13B07D05D4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91791242-3F7E-4F0E-8C2B-13B07D05D4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1709AC6-0D2F-4E3E-81DA-671B4A158427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1709AC6-0D2F-4E3E-81DA-671B4A158427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1709AC6-0D2F-4E3E-81DA-671B4A158427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1709AC6-0D2F-4E3E-81DA-671B4A158427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +65,7 @@ Global
 		{2F9F30EE-5B5B-4BFB-9677-FC0792EC3851} = {FB332BD6-05BF-4BC2-84F8-7F1CC38222BD}
 		{259134F5-7FCB-436D-805D-3B9ACDB82EA9} = {84A723E9-5320-4B9E-B4B9-1A92D2267BB3}
 		{91791242-3F7E-4F0E-8C2B-13B07D05D4D3} = {B5DE0456-D75E-45AF-B57E-42DBD95E8E5C}
+		{F1709AC6-0D2F-4E3E-81DA-671B4A158427} = {3B126A8B-A403-469C-A0A5-54999B1C7965}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {809D8299-6623-433E-A402-270E77E38040}

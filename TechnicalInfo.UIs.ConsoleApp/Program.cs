@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SomeResult;
+using System;
 using System.Threading.Tasks;
 using TechnicalInfo.Domain.Models;
 using TechnicalInfo.Infrastructure.Interfaces;
@@ -12,15 +13,15 @@ namespace TechnicalInfo.UIs.ConsoleApp
         private static string wsNameWithWin7 = "ws555a";
         private static string wsNameWithWin10 = "ws1674";
         private static string ws007 = "ws007";
+        private static string notExistsWs = "ws9999";
+        private static string anotherAdminPassword = "ws2032";
 
-        private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007 };
+        private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007, notExistsWs, anotherAdminPassword };
 
         private static IInfoCollectorService wmiInfoCollectorService = new WmiInfoCollectorService();
 
         static async Task Main(string[] args)
         {
-            Console.Write("Сейчас будет собираться информация\nНажмите на клавишу...");
-            Console.ReadLine();
             await GetInfoFromService(wsNames);
         }
         
@@ -30,31 +31,37 @@ namespace TechnicalInfo.UIs.ConsoleApp
             result.ForEach(PrintInfo);
         }
 
-        private static void PrintInfo(WorkStationModel model)
+        private static void PrintInfo(Result<WorkStationModel, string> model)
         {
-            Console.WriteLine($"{model.WsName}");
-            Console.WriteLine($"Процессор: {model.Cpu.Name}. Частота: {model.Cpu.Frequency} MHz");
-            Console.WriteLine($"Материнская плата: {model.Motherboard.Model} - Производитель: {model.Motherboard.Manufacturer}");
-            Console.WriteLine($"Пользователь: {model.SystemUser.Login}");
-            Console.WriteLine($"ОС: {model.OperatingSystem.Name}");
-            Console.WriteLine("Видео:");
-            model.VideoAdapters.ForEach(x =>
+            if(model.Error != null)
             {
-                Console.WriteLine($"\t{x.Name}");
-                Console.WriteLine($"\t{x.Memory / Math.Pow(1024, 2)} Mb");
-            });
-            Console.WriteLine("ОЗУ:");
-            model.Rams.ForEach(x =>
+                Console.WriteLine(model.Error);
+            }
+            else
             {
-                Console.WriteLine($"\t{x.Capacity / Math.Pow(1024, 2)} Mb");
-            });
-            Console.WriteLine("Разделы:");
-            model.PartitionDisks.ForEach(x =>
-            {
-                Console.WriteLine($"\t{x.Name}");
-                Console.WriteLine($"\t{x.Size / Math.Pow(1024, 3):0.##} Gb");
-            });
-
+                Console.WriteLine($"{model.Success.WsName}");
+                Console.WriteLine($"Процессор: {model.Success.Cpu.Name}. Частота: {model.Success.Cpu.Frequency} MHz");
+                Console.WriteLine($"Материнская плата: {model.Success.Motherboard.Model} - Производитель: {model.Success.Motherboard.Manufacturer}");
+                Console.WriteLine($"Пользователь: {model.Success.SystemUser.Login}");
+                Console.WriteLine($"ОС: {model.Success.OperatingSystem.Name}");
+                Console.WriteLine("Видео:");
+                model.Success.VideoAdapters.ForEach(x =>
+                {
+                    Console.WriteLine($"\t{x.Name}");
+                    Console.WriteLine($"\t{x.Memory / Math.Pow(1024, 2)} Mb");
+                });
+                Console.WriteLine("ОЗУ:");
+                model.Success.Rams.ForEach(x =>
+                {
+                    Console.WriteLine($"\t{x.Capacity / Math.Pow(1024, 2)} Mb");
+                });
+                Console.WriteLine("Разделы:");
+                model.Success.PartitionDisks.ForEach(x =>
+                {
+                    Console.WriteLine($"\t{x.Name}");
+                    Console.WriteLine($"\t{x.Size / Math.Pow(1024, 3):0.##} Gb");
+                });
+            }
             Console.WriteLine();
         }
     }
