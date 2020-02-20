@@ -21,9 +21,15 @@ namespace TechnicalInfo.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<Result<WorkStationModel, string>> Get([FromQuery]string wsname)
+        public async Task<Result<WorkStationModel, string>> Get([FromQuery(Name = "name")]string wsname)
         {
             return (await infoCollectorService.GetComputersInfo(new string[] { wsname })).FirstOrDefault();
+        }
+
+        [HttpGet("many")]
+        public Task<List<Result<WorkStationModel, string>>> GetMany([FromQuery(Name = "name")]string[] wsnames)
+        {
+            return infoCollectorService.GetComputersInfo(wsnames);
         }
     }
 }
