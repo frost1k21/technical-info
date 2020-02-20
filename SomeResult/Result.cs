@@ -1,9 +1,9 @@
 ﻿
 namespace SomeResult
 {
-    public class Result<TSucces, TError>
+    public class Result<TSuccess, TError>
     {
-        public TSucces Success { get; set; }
+        public TSuccess Success { get; set; }
         public TError Error { get; set; }
     }
 }
