@@ -23,11 +23,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkWsChecker", "..\Remo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OptionType", "OptionType", "{3B126A8B-A403-469C-A0A5-54999B1C7965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeResult", "SomeResult\SomeResult.csproj", "{F1709AC6-0D2F-4E3E-81DA-671B4A158427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SomeResult", "SomeResult\SomeResult.csproj", "{F1709AC6-0D2F-4E3E-81DA-671B4A158427}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{B5E7C0C8-CB84-493D-B86F-2E61E6B0CE8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.WebApi", "TechnicalInfo.WebApi\TechnicalInfo.WebApi.csproj", "{87EF74E9-DF62-4256-8000-714B787D8435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalInfo.WebApi", "TechnicalInfo.WebApi\TechnicalInfo.WebApi.csproj", "{87EF74E9-DF62-4256-8000-714B787D8435}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.BlazorHostedApp.Server", "TechnicalInfo.UIs.BlazorHostedApp\Server\TechnicalInfo.UIs.BlazorHostedApp.Server.csproj", "{C670A325-00CB-4556-A58B-F1004DDD901B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.BlazorHostedApp.Client", "TechnicalInfo.UIs.BlazorHostedApp\Client\TechnicalInfo.UIs.BlazorHostedApp.Client.csproj", "{C664F09D-E4C1-4004-8721-E40B053C4C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.BlazorHostedApp.Shared", "TechnicalInfo.UIs.BlazorHostedApp\Shared\TechnicalInfo.UIs.BlazorHostedApp.Shared.csproj", "{71B1B354-258C-43C4-A08F-F6936F1AE6A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorHostedApp", "BlazorHostedApp", "{3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +71,18 @@ Global
 		{87EF74E9-DF62-4256-8000-714B787D8435}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87EF74E9-DF62-4256-8000-714B787D8435}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87EF74E9-DF62-4256-8000-714B787D8435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C670A325-00CB-4556-A58B-F1004DDD901B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C670A325-00CB-4556-A58B-F1004DDD901B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C670A325-00CB-4556-A58B-F1004DDD901B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C670A325-00CB-4556-A58B-F1004DDD901B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C664F09D-E4C1-4004-8721-E40B053C4C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C664F09D-E4C1-4004-8721-E40B053C4C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C664F09D-E4C1-4004-8721-E40B053C4C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C664F09D-E4C1-4004-8721-E40B053C4C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +95,10 @@ Global
 		{91791242-3F7E-4F0E-8C2B-13B07D05D4D3} = {B5DE0456-D75E-45AF-B57E-42DBD95E8E5C}
 		{F1709AC6-0D2F-4E3E-81DA-671B4A158427} = {3B126A8B-A403-469C-A0A5-54999B1C7965}
 		{87EF74E9-DF62-4256-8000-714B787D8435} = {B5E7C0C8-CB84-493D-B86F-2E61E6B0CE8E}
+		{C670A325-00CB-4556-A58B-F1004DDD901B} = {3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD}
+		{C664F09D-E4C1-4004-8721-E40B053C4C87} = {3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD}
+		{71B1B354-258C-43C4-A08F-F6936F1AE6A8} = {3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD}
+		{3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD} = {FB332BD6-05BF-4BC2-84F8-7F1CC38222BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {809D8299-6623-433E-A402-270E77E38040}
