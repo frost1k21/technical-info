@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using TechnicalInfo.Infrastructure.Interfaces;
+using TechnicalInfo.Infrastructure.Wmi;
+using TechnicalInfo.UIs.BlazorHostedApp.Server.Hubs;
 
 namespace TechnicalInfo.UIs.BlazorHostedApp.Server
 {
@@ -14,6 +17,8 @@ namespace TechnicalInfo.UIs.BlazorHostedApp.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSignalR();
+            services.AddTransient<IInfoCollectorService, WmiInfoCollectorService>();
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -40,6 +45,7 @@ namespace TechnicalInfo.UIs.BlazorHostedApp.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapHub<TechInfoHub>("/techinfo");
                 endpoints.MapFallbackToClientSideBlazor<Client.Program>("index.html");
             });
         }

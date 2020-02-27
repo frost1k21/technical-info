@@ -1,7 +1,79 @@
 ﻿@page "/"
+@inject NavigationManager _navigationManager
 
-<h1>Hello, world!</h1>
+<h1>@_title</h1>
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+    <span>Введите имя компьютера: </span>
+    <input @bind="_wsNames"/>@(" ")
+    <button @onclick="Send" disabled="@(!IsConnected || _isLoading)">Отправить</button>
+</div>
+<div>
+    @if (_isLoading)
+    {
+        <div>Подождите. Идет сбор информации.</div>
+    }
+    else
+    {
+        <ul>
+            @foreach (var item in results)
+            {
+                <li>
+                    <div>
+                        @if (!string.IsNullOrEmpty(item.Error))
+                        {
+                            <h3>@item.Error</h3>
+                        }
+                        else
+                        {
+                            <h3>@item.Success.WsName</h3>
+                            <p>Операционная система: @item.Success.OperatingSystem.Name</p>
+                            <p>Процессор: @item.Success.Cpu.Name @item.Success.Cpu.Frequency MHz</p>
+                            <p>Материнская плата: @item.Success.Motherboard.Manufacturer @item.Success.Motherboard.Model</p>
+                        }
+
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+</div>
+
+
+@code {
+    private string _title = "Hello, world!";
+    private string _wsNames;
+    private HubConnection _hubConnection;
+    private List<Result<WorkStationModel, string>> results = new List<Result<WorkStationModel, string>>();
+    private bool _isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(_navigationManager.ToAbsoluteUri("/techinfo"))
+            .Build();
+
+        _hubConnection.On<List<Result<WorkStationModel, string>>>("ReceiveInfo", (resultFromApi) =>
+        {
+            results = resultFromApi;
+            _isLoading = false;
+            StateHasChanged();
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    Task Send()
+    {
+        _isLoading = true;
+        var names = _wsNames.Split(' ');
+        _wsNames = "";
+        StateHasChanged();
+        return _hubConnection.SendAsync("GetInfo", names);
+    }
+
+    public bool IsConnected => _hubConnection.State == HubConnectionState.Connected;
+}
