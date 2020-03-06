@@ -16,7 +16,8 @@ namespace TechnicalInfo.UIs.ConsoleApp
         private static string notExistsWs = "ws9999";
         private static string anotherAdminPassword = "ws2032";
 
-        private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007, notExistsWs, anotherAdminPassword };
+        //private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007, notExistsWs, anotherAdminPassword };
+        private static string[] wsNames = new string[] { wsNameWithWin7, ws007 };
 
         private static IInfoCollectorService wmiInfoCollectorService = new WmiInfoCollectorService();
 
@@ -60,6 +61,13 @@ namespace TechnicalInfo.UIs.ConsoleApp
                 {
                     Console.WriteLine($"\t{x.Name}");
                     Console.WriteLine($"\t{x.Size / Math.Pow(1024, 3):0.##} Gb");
+                });
+                Console.WriteLine("Мониторы:");
+                model.Success.Monitors.ForEach(x =>
+                {
+                    Console.WriteLine($"\t{x.Manufacturer}");
+                    Console.WriteLine($"\t{x.Model}");
+                    Console.WriteLine($"\t{x.MonitorConnectionPortName}");
                 });
             }
             Console.WriteLine();

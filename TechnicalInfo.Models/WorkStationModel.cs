@@ -13,5 +13,6 @@ namespace TechnicalInfo.Domain.Models
         public List<RamModel> Rams { get; set; }
         public List<DiskDriveModel> PartitionDisks { get; set; }
         public List<VideoAdapterModel> VideoAdapters { get; set; }
+        public List<MonitorModel> Monitors { get; set; }
     }
 }
