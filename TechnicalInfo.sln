@@ -29,15 +29,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{B5E7C0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalInfo.WebApi", "TechnicalInfo.WebApi\TechnicalInfo.WebApi.csproj", "{87EF74E9-DF62-4256-8000-714B787D8435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.BlazorHostedApp.Server", "TechnicalInfo.UIs.BlazorHostedApp\Server\TechnicalInfo.UIs.BlazorHostedApp.Server.csproj", "{C670A325-00CB-4556-A58B-F1004DDD901B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalInfo.UIs.BlazorHostedApp.Server", "TechnicalInfo.UIs.BlazorHostedApp\Server\TechnicalInfo.UIs.BlazorHostedApp.Server.csproj", "{C670A325-00CB-4556-A58B-F1004DDD901B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.BlazorHostedApp.Client", "TechnicalInfo.UIs.BlazorHostedApp\Client\TechnicalInfo.UIs.BlazorHostedApp.Client.csproj", "{C664F09D-E4C1-4004-8721-E40B053C4C87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalInfo.UIs.BlazorHostedApp.Client", "TechnicalInfo.UIs.BlazorHostedApp\Client\TechnicalInfo.UIs.BlazorHostedApp.Client.csproj", "{C664F09D-E4C1-4004-8721-E40B053C4C87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.UIs.BlazorHostedApp.Shared", "TechnicalInfo.UIs.BlazorHostedApp\Shared\TechnicalInfo.UIs.BlazorHostedApp.Shared.csproj", "{71B1B354-258C-43C4-A08F-F6936F1AE6A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnicalInfo.UIs.BlazorHostedApp.Shared", "TechnicalInfo.UIs.BlazorHostedApp\Shared\TechnicalInfo.UIs.BlazorHostedApp.Shared.csproj", "{71B1B354-258C-43C4-A08F-F6936F1AE6A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorHostedApp", "BlazorHostedApp", "{3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConsoleApp", "ConsoleApp", "{9E3B0263-DEF6-425C-BAB2-4EC899AE9B83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.Infrastructure.ExcelWriter", "TechnicalInfo.Infrastructure.ExcelWriter\TechnicalInfo.Infrastructure.ExcelWriter.csproj", "{B353850A-6FC8-41EF-BB9E-2EC1AE599D5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnicalInfo.Infrastructure.ConsoleWriter", "TechnicalInfo.Infrastructure.ConsoleWriter\TechnicalInfo.Infrastructure.ConsoleWriter.csproj", "{C831546F-B1B2-4E75-8523-08EE400D7540}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Writers", "Writers", "{8059E115-6BFD-4516-80A3-64D91B71D595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +91,14 @@ Global
 		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71B1B354-258C-43C4-A08F-F6936F1AE6A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B353850A-6FC8-41EF-BB9E-2EC1AE599D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B353850A-6FC8-41EF-BB9E-2EC1AE599D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B353850A-6FC8-41EF-BB9E-2EC1AE599D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B353850A-6FC8-41EF-BB9E-2EC1AE599D5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C831546F-B1B2-4E75-8523-08EE400D7540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C831546F-B1B2-4E75-8523-08EE400D7540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C831546F-B1B2-4E75-8523-08EE400D7540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C831546F-B1B2-4E75-8523-08EE400D7540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +116,9 @@ Global
 		{71B1B354-258C-43C4-A08F-F6936F1AE6A8} = {3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD}
 		{3FF70CBE-2A3D-4A21-BCE6-CA8006286ABD} = {FB332BD6-05BF-4BC2-84F8-7F1CC38222BD}
 		{9E3B0263-DEF6-425C-BAB2-4EC899AE9B83} = {FB332BD6-05BF-4BC2-84F8-7F1CC38222BD}
+		{B353850A-6FC8-41EF-BB9E-2EC1AE599D5F} = {8059E115-6BFD-4516-80A3-64D91B71D595}
+		{C831546F-B1B2-4E75-8523-08EE400D7540} = {8059E115-6BFD-4516-80A3-64D91B71D595}
+		{8059E115-6BFD-4516-80A3-64D91B71D595} = {84A723E9-5320-4B9E-B4B9-1A92D2267BB3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {809D8299-6623-433E-A402-270E77E38040}
