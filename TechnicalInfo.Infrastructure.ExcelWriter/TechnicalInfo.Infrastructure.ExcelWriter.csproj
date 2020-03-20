@@ -8,4 +8,8 @@
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infrastructure.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

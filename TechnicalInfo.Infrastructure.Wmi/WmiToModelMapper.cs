@@ -22,6 +22,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
 
                 case RamModel ram:
                     ram.Capacity = ulong.Parse(managementBaseObject.SafeGetProperty("capacity"));
+                    ram.Speed = int.Parse(managementBaseObject.SafeGetProperty("speed"));
                     return ram as T;
 
                 case DiskDriveModel partitionDiskDrive:

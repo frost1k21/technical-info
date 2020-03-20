@@ -8,6 +8,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SomeResult\SomeResult.csproj" />
     <ProjectReference Include="..\TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infrastructure.Interfaces.csproj" />
+    <ProjectReference Include="..\TechnicalInfo.Infrastructure.ConsoleWriter\TechnicalInfo.Infrastructure.ConsoleWriter.csproj" />
+    <ProjectReference Include="..\TechnicalInfo.Infrastructure.ExcelWriter\TechnicalInfo.Infrastructure.ExcelWriter.csproj" />
     <ProjectReference Include="..\TechnicalInfo.Infrastructure.Wmi\TechnicalInfo.Infrastructure.Wmi.csproj" />
   </ItemGroup>
 

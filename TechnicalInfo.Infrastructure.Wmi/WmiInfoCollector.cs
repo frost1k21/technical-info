@@ -132,7 +132,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
                 SystemUser = userName.Result.Success.FirstOrDefault(),
                 VideoAdapters = videoAdapter.Result.Success.Where(v => v.Memory != 0).ToList(),
                 Rams = memory.Result.Success.ToList(),
-                PartitionDisks = partitions.Result.Success.Where(p => p.Size != 0).ToList(),
+                DiskDrives = partitions.Result.Success.Where(p => p.Size != 0).ToList(),
                 Monitors = monitors.Result.Success.ToList()
             };
 
