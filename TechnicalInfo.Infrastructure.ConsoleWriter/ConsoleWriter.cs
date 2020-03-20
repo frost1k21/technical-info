@@ -43,7 +43,7 @@ namespace TechnicalInfo.Infrastructure.ConsoleWriter
                         Console.WriteLine($"\t{x.Size / Math.Pow(1024, 3):0.##} Gb");
                     });
                     Console.WriteLine("Мониторы:");
-                    model.Success.Monitors.ForEach(x =>
+                    model.Success.Monitors?.ForEach(x =>
                     {
                         Console.WriteLine($"\t{x.Manufacturer}");
                         Console.WriteLine($"\t{x.Model}");

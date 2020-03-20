@@ -18,8 +18,8 @@ namespace TechnicalInfo.UIs.ConsoleApp
         private static string notExistsWs = "ws9999";
         private static string anotherAdminPassword = "ws2032";
 
-        //private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007, notExistsWs, anotherAdminPassword };
-        private static string[] wsNames = new string[] { wsNameWithWin7, ws007, notExistsWs, anotherAdminPassword, wsNameWithXp };
+        private static string[] wsNames = new string[] { wsNameWithXp, wsNameWithWin7, wsNameWithWin10, ws007, notExistsWs, anotherAdminPassword };
+        //private static string[] wsNames = new string[] { wsNameWithXp };
 
         private static IInfoCollectorService wmiInfoCollectorService = new WmiInfoCollectorService();
         private static IInfoWriter infoWriter = new ConsoleWriter();

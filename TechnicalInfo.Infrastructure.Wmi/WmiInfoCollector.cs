@@ -118,25 +118,23 @@ namespace TechnicalInfo.Infrastructure.Wmi
             var partitions = Get<DiskDriveModel>(wsName);
             var monitors = GetMonitors(wsName);
 
-            Task.WaitAll(motherboard, cpu, operatingSystem, videoAdapter, userName);
+            Task.WaitAll(motherboard, cpu, operatingSystem, videoAdapter, userName, memory, partitions, monitors);
 
             if (motherboard.Result.Error != null)
                 return Task.FromResult(new Result<WorkStationModel, string>() { Error = motherboard.Result.Error });
 
-            var workStation = new WorkStationModel()
-            {
-                WsName = wsName,
-                Cpu = cpu.Result.Success.FirstOrDefault(),
-                Motherboard = motherboard.Result.Success.FirstOrDefault(),
-                OperatingSystem = operatingSystem.Result.Success.FirstOrDefault(),
-                SystemUser = userName.Result.Success.FirstOrDefault(),
-                VideoAdapters = videoAdapter.Result.Success.Where(v => v.Memory != 0).ToList(),
-                Rams = memory.Result.Success.ToList(),
-                DiskDrives = partitions.Result.Success.Where(p => p.Size != 0).ToList(),
-                Monitors = monitors.Result.Success.ToList()
-            };
+            var workstation2 = new WorkStationModel();
+            workstation2.WsName = wsName;
+            workstation2.Cpu = cpu.Result.Success.FirstOrDefault();
+            workstation2.Motherboard = motherboard.Result.Success.FirstOrDefault();
+            workstation2.OperatingSystem = operatingSystem.Result.Success.FirstOrDefault();
+            workstation2.SystemUser = userName.Result.Success.FirstOrDefault();
+            workstation2.VideoAdapters = videoAdapter.Result.Success.Where(v => v.Memory != 0).ToList();
+            workstation2.Rams = memory.Result.Success.ToList();
+            workstation2.Monitors = monitors.Result.Success?.ToList();
+            workstation2.DiskDrives = partitions.Result.Success.Where(p => p.Size != 0).ToList();
 
-            return Task.FromResult(new Result<WorkStationModel, string>() { Success = workStation });
+            return Task.FromResult(new Result<WorkStationModel, string>() { Success = workstation2 });
 
         }
 

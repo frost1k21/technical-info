@@ -58,7 +58,8 @@ namespace TechnicalInfo.Infrastructure.ExcelWriter
 
                         worksheet.Cells[$"F{currnetRow}"].Value = string.Join($"{newLine}", item.Success.DiskDrives.Select(dd => $"{dd.Name}{newLine}{dd.Size / Math.Pow(1024, 3):0.##} Gb"));
 
-                        worksheet.Cells[$"G{currnetRow}"].Value = string.Join($"{newLine}", item.Success.Monitors.Select(mon => $"{mon.Manufacturer}{newLine}{mon.Model}{newLine}{mon.MonitorConnectionPortName}"));
+                        if(item.Success.Monitors != null)
+                            worksheet.Cells[$"G{currnetRow}"].Value = string.Join($"{newLine}", item.Success.Monitors.Select(mon => $"{mon.Manufacturer}{newLine}{mon.Model}{newLine}{mon.MonitorConnectionPortName}"));
 
                         worksheet.Cells[$"H{currnetRow}"].Value = $"{item.Success.SystemUser.Login}";
                         worksheet.Cells[$"I{currnetRow}"].Value = $"{item.Success.OperatingSystem.Name}{newLine}{item.Success.OperatingSystem.OsArchitecture}{newLine}SP{item.Success.OperatingSystem.ServicePack}";
