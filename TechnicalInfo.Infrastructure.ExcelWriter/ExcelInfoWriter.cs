@@ -107,7 +107,7 @@ namespace TechnicalInfo.Infrastructure.ExcelWriter
                 worksheetError.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 worksheetError.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Top;
 
-                var name = DateTime.UtcNow.ToString("dd-MM-yyyy hh.mm.ss");
+                var name = DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss");
                 var xlFile = new FileInfo($"{name}.xlsx");
                 // save our new workbook in the output directory and we are done!
                 package.SaveAs(xlFile);

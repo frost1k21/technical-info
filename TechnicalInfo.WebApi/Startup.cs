@@ -26,6 +26,7 @@ namespace TechnicalInfo.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddTransient<IInfoCollectorService, WmiInfoCollectorService>();
             services.AddControllers();
         }
@@ -41,6 +42,10 @@ namespace TechnicalInfo.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(builder => builder.AllowAnyOrigin()
+                                          .AllowAnyHeader()
+                                          .AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {

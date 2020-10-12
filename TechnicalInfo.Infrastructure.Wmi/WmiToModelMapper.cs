@@ -17,12 +17,12 @@ namespace TechnicalInfo.Infrastructure.Wmi
 
                 case CpuModel cpu:
                     cpu.Name = managementBaseObject.SafeGetProperty("Name").Split('@')[0].Trim();
-                    cpu.Frequency = int.Parse(managementBaseObject.SafeGetProperty("MaxClockSpeed"));
+                    cpu.Frequency = int.TryParse(managementBaseObject.SafeGetProperty("MaxClockSpeed"), out int realFreaquency) ? realFreaquency : 0;
                     return cpu as T;
 
                 case RamModel ram:
                     ram.Capacity = ulong.Parse(managementBaseObject.SafeGetProperty("capacity"));
-                    ram.Speed = int.Parse(managementBaseObject.SafeGetProperty("speed"));
+                    ram.Speed = int.TryParse(managementBaseObject.SafeGetProperty("speed"), out int realSpeed) ? realSpeed : 0;
                     return ram as T;
 
                 case DiskDriveModel partitionDiskDrive:

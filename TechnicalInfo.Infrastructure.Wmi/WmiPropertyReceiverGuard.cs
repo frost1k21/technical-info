@@ -8,7 +8,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
         {
 			try
 			{
-				return managementBaseObject[propertyName].ToString();
+				return managementBaseObject[propertyName]?.ToString() ?? "";
 			}
 			catch (System.Exception)
 			{
