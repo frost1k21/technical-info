@@ -35,7 +35,8 @@ namespace TechnicalInfo.UIs.ConsoleApp
         {
             if(args.Length == 0)
             {
-                InitialDialog();
+                //InitialDialog();
+                GetWsNamesFromUserInput();
             }
             else
             {
