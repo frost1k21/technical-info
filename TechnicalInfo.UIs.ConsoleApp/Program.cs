@@ -1,6 +1,7 @@
 ﻿using SomeResult;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TechnicalInfo.Domain.Models;
@@ -69,6 +70,8 @@ namespace TechnicalInfo.UIs.ConsoleApp
 
                 await excelInfoWriter.Write(result.ToArray());
                 Console.WriteLine("Данные собраны");
+                var fileInfo = (excelInfoWriter as ExcelInfoWriter).GetFileInfo();
+                System.Diagnostics.Process.Start("cmd.exe", $@"/c start excel.exe ""{Directory.GetCurrentDirectory()}\{fileInfo.Name}""");
             }
             else
             {

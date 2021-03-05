@@ -13,6 +13,8 @@ namespace TechnicalInfo.Infrastructure.ExcelWriter
 {
     public class ExcelInfoWriter : IInfoWriter
     {
+        private FileInfo _xlFile;
+
         public Task Write(params Result<WorkStationModel, string>[] workStationModels)
         {
             var newLine = Environment.NewLine;
@@ -111,9 +113,17 @@ namespace TechnicalInfo.Infrastructure.ExcelWriter
                 var xlFile = new FileInfo($"{name}.xlsx");
                 // save our new workbook in the output directory and we are done!
                 package.SaveAs(xlFile);
+                _xlFile = xlFile;
             }
 
             return Task.CompletedTask;
         }
+
+        public FileInfo GetFileInfo()
+        {
+            Console.WriteLine(_xlFile.FullName);
+            return _xlFile;
+        }
     }
+
 }
