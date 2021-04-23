@@ -4,5 +4,6 @@
     {
         public ulong Capacity { get; set; }
         public int Speed { get; set; }
+        public string MemType { get; set; } = "";
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject NavigationManager _navigationManager
+@implements IAsyncDisposable
 
 <h1>@_title</h1>
 
@@ -8,43 +9,73 @@ Welcome to your new app.
 <div>
     <span>Введите имя компьютера: </span>
     <input @bind="_wsNames"/>@(" ")
-    <button @onclick="Send" disabled="@(!IsConnected || _isLoading)">Отправить</button>
+    <button class="btn btn-primary" 
+        @onclick="Send" disabled="@(!IsConnected || _isLoading)">Отправить</button>
 </div>
 <div>
     @if (_isLoading)
     {
         <div>Подождите. Идет сбор информации.</div>
     }
+    else if (results.Count == 0)
+    {
+        <div>Пустой список</div>
+    }
     else
     {
-        <ul>
-            @foreach (var item in results)
-            {
-                <li>
-                    <div>
-                        @if (!string.IsNullOrEmpty(item.Error))
+        <br />
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width:210px">Имя компьютера</th>
+                    <th style="width:224px">Материнская плата</th>
+                    <th style="width:224px">Процессор</th>
+                    <th style="width:154px">Память</th>
+                    <th style="width:210px">Видео</th>
+                    <th style="width:245px">HDD</th>
+                    <th style="width:210px">Мониторы</th>
+                    <th style="width:210px">Пользователи</th>
+                    <th style="width:210px">Операционная система</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in results)
+                {
+                    <tr>
+                        @if(!string.IsNullOrEmpty(item.Error))
                         {
-                            <h3>@item.Error</h3>
+                            <td colspan="9">@item.Error</td>
                         }
                         else
                         {
-                            <h3>@item.Success.WsName</h3>
-                            <p>Операционная система: @item.Success.OperatingSystem.Name</p>
-                            <p>Процессор: @item.Success.Cpu.Name @item.Success.Cpu.Frequency MHz</p>
-                            <p>Материнская плата: @item.Success.Motherboard.Manufacturer @item.Success.Motherboard.Model</p>
+                            <td style="width:210px">@item.Success.WsName</td>
+                            <td style="width:224px;">@($"{item.Success.Motherboard.Model}{Environment.NewLine}Производитель:{Environment.NewLine}{item.Success.Motherboard.Manufacturer}")</td>
+                            <td style="width:224px;">@($"{item.Success.Cpu.Name}{Environment.NewLine}Частота: {item.Success.Cpu.Frequency} MHz")</td>
+                            <td style="width:154px;">@((MarkupString)string.Join($"<br/>", item.Success.Rams.Select(r => $"Объем: {r.Capacity / Math.Pow(1024, 2)}Mb{Environment.NewLine}Частота: {r.Speed} MHz")))</td>
+                            <td style="width:210px;">@((MarkupString)string.Join($"<br/>", item.Success.VideoAdapters.Select(va => $"{va.Name}<br/>{va.Memory / Math.Pow(1024, 2)} Mb")))</td>
+                            <td style="width:245px;">@((MarkupString)string.Join($"<br/>", item.Success.DiskDrives.Select(dd => $"{dd.Name}<br/>{dd.Size / Math.Pow(1024, 3):0.##} Gb")))</td>
+                            @if(item.Success.Monitors != null)
+                            {
+                                <td style="width:210px;">@((MarkupString)string.Join($"<br/>", item.Success.Monitors.Select(mon => $"{mon.Manufacturer}<br/>{mon.Model}<br/>{mon.MonitorConnectionPortName}")))</td>
+                            }
+                            else 
+                            {
+                                <td style="width:210px;"></td>   
+                            }
+                            <td style="width:210px">@($"{item.Success.SystemUser.Login}")</td>
+                            <td style="width:210px;">@($"{item.Success.OperatingSystem.Name}{Environment.NewLine}{item.Success.OperatingSystem.OsArchitecture}{Environment.NewLine}SP{item.Success.OperatingSystem.ServicePack}")</td>
                         }
-
-                    </div>
-                </li>
-            }
-        </ul>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 
 </div>
 
 
 @code {
-    private string _title = "Hello, world!";
+    private string _title = "Технические характеристики компьютеров.";
     private string _wsNames;
     private HubConnection _hubConnection;
     private List<Result<WorkStationModel, string>> results = new List<Result<WorkStationModel, string>>();
@@ -76,4 +107,9 @@ Welcome to your new app.
     }
 
     public bool IsConnected => _hubConnection.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        await _hubConnection.DisposeAsync();
+    }
 }

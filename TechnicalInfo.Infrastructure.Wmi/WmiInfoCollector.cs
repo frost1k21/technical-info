@@ -117,6 +117,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
             var memory = Get<RamModel>(wsName);
             var partitions = Get<DiskDriveModel>(wsName);
             var monitors = GetMonitors(wsName);
+            var memoryTypeStrings = GetMemoryType(wsName);
 
             Task.WaitAll(motherboard, cpu, operatingSystem, videoAdapter, userName, memory, partitions, monitors);
 
@@ -131,6 +132,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
             workstation2.SystemUser = userName.Result.Success.FirstOrDefault();
             workstation2.VideoAdapters = videoAdapter.Result.Success.Where(v => v.Memory != 0).ToList();
             workstation2.Rams = memory.Result.Success.ToList();
+            workstation2.Rams.ForEach(x => x.MemType = memoryTypeStrings.Result.Success);
             workstation2.Monitors = monitors.Result.Success?.ToList();
             workstation2.DiskDrives = partitions.Result.Success.Where(p => p.Size != 0).ToList();
 
@@ -209,6 +211,67 @@ namespace TechnicalInfo.Infrastructure.Wmi
         private string GetWmiPath(string wsName)
         {
             return $@"\\{wsName}\root\cimv2";
+        }
+
+
+        // TODO: complete memory type collection
+        private Task<Result<string, string>> GetMemoryType(string wsName)
+        {
+            return Task.Run(() => 
+            {
+                try
+                {
+                    var scope = new ManagementScope($@"\\{wsName}\root\wmi");
+                    scope.Connect();
+
+                    var selectQuery = new SelectQuery("Select * from MSSmBios_RawSMBiosTables");
+
+                    var searcher = new ManagementObjectSearcher(scope, selectQuery);
+                    var memoryTypeStrings = new List<string>();
+
+                    foreach (var data in searcher.Get())
+                    {
+                        var dataByte = data["SMBiosData"] as byte[];
+
+                        for (int i = 0; i < dataByte.Length; i++)
+                        {
+                            if (dataByte[i] == 17 && dataByte[i - 1] == 00 && dataByte[i - 2] == 00)
+                            {
+                                var memType = dataByte[i + 0x12];
+
+                                switch (memType)
+                                {
+                                    case 26:
+                                        memoryTypeStrings.Add("DDR4");
+                                        break;
+                                    case 20:
+                                        memoryTypeStrings.Add("DDR");
+                                        break;
+                                    case 21:
+                                        memoryTypeStrings.Add("DDR2");
+                                        break;
+                                    case 24:
+                                        memoryTypeStrings.Add("DDR3");
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+
+                    if(memoryTypeStrings.Count > 0)
+                        return Task.FromResult(new Result<string, string>() { Success = memoryTypeStrings.First() });
+
+                    return Task.FromResult(new Result<string, string>() { Success = "" });
+                }
+                catch (Exception e)
+                {
+
+                    return Task.FromResult(new Result<string, string>() { Error = $"{wsName} {e.Message}" });
+                }
+            });
+            
         }
 
         private Task<Result<IEnumerable<MonitorModel>, string>> GetMonitors(string wsName)

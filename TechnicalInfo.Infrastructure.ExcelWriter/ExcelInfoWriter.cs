@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TechnicalInfo.Domain.Models;
 using TechnicalInfo.Infrastructure.Interfaces;
 using OfficeOpenXml.Style;
+using System.Collections.Generic;
 
 namespace TechnicalInfo.Infrastructure.ExcelWriter
 {
@@ -54,13 +55,13 @@ namespace TechnicalInfo.Infrastructure.ExcelWriter
                         worksheet.Cells[$"B{currnetRow}"].Value = $"{item.Success.Motherboard.Model}{newLine}Производитель:{newLine}{item.Success.Motherboard.Manufacturer}";
                         worksheet.Cells[$"C{currnetRow}"].Value = $"{item.Success.Cpu.Name}{newLine}Частота: {item.Success.Cpu.Frequency} MHz";
 
-                        worksheet.Cells[$"D{currnetRow}"].Value = string.Join($"{newLine}", item.Success.Rams.Select(r => $"Объем: {r.Capacity / Math.Pow(1024, 2)}Mb{newLine}Частота: {r.Speed} MHz"));
+                        worksheet.Cells[$"D{currnetRow}"].Value = MemoryFormatString(newLine, item);
 
                         worksheet.Cells[$"E{currnetRow}"].Value = string.Join($"{newLine}", item.Success.VideoAdapters.Select(va => $"{va.Name}{newLine}{va.Memory / Math.Pow(1024, 2)} Mb"));
 
                         worksheet.Cells[$"F{currnetRow}"].Value = string.Join($"{newLine}", item.Success.DiskDrives.Select(dd => $"{dd.Name}{newLine}{dd.Size / Math.Pow(1024, 3):0.##} Gb"));
 
-                        if(item.Success.Monitors != null)
+                        if (item.Success.Monitors != null)
                             worksheet.Cells[$"G{currnetRow}"].Value = string.Join($"{newLine}", item.Success.Monitors.Select(mon => $"{mon.Manufacturer}{newLine}{mon.Model}{newLine}{mon.MonitorConnectionPortName}"));
 
                         worksheet.Cells[$"H{currnetRow}"].Value = $"{item.Success.SystemUser.Login}";
@@ -117,6 +118,22 @@ namespace TechnicalInfo.Infrastructure.ExcelWriter
             }
 
             return Task.CompletedTask;
+        }
+
+        private static string MemoryFormatString(string separator, Result<WorkStationModel, string> item)
+        {
+            var totalMemory = item.Success.Rams.Sum(r => r.Capacity / Math.Pow(1024, 2));
+            var totalMemoryString = $"Весь объем: {totalMemory}Mb";
+            var ramsStrings = item.Success.Rams.Select(r => 
+            {
+                var memType = "";
+                if (!string.IsNullOrEmpty(r.MemType)) memType = $"Тип памяти: {r.MemType}{separator}";
+                return $"Объем: {r.Capacity / Math.Pow(1024, 2)}Mb{separator}{memType}Частота: {r.Speed} MHz";
+            });
+            var stringsList = new List<string>();
+            stringsList.Add(totalMemoryString);
+            stringsList.AddRange(ramsStrings);
+            return string.Join($"{separator}", stringsList);
         }
 
         public FileInfo GetFileInfo()
