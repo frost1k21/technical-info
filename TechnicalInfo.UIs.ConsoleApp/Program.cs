@@ -71,7 +71,7 @@ namespace TechnicalInfo.UIs.ConsoleApp
                 await excelInfoWriter.Write(result.ToArray());
                 Console.WriteLine("Данные собраны");
                 var fileInfo = (excelInfoWriter as ExcelInfoWriter).GetFileInfo();
-                System.Diagnostics.Process.Start("cmd.exe", $@"/c start excel.exe ""{Directory.GetCurrentDirectory()}\{fileInfo.Name}""");
+                System.Diagnostics.Process.Start("cmd.exe", $@"/c start excel.exe ""{fileInfo.FullName}""");
             }
             else
             {
