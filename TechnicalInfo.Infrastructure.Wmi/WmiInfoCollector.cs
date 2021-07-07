@@ -293,7 +293,7 @@ namespace TechnicalInfo.Infrastructure.Wmi
                     foreach (var item in result)
                     {
                         var monitorByteArr = ((UInt16[])item["UserFriendlyName"]).ToList().Select(Convert.ToByte).ToArray();
-                        var monitorModel = Encoding.UTF8.GetString(monitorByteArr);
+                        var monitorModel = Encoding.UTF8.GetString(monitorByteArr).TrimEnd('\0');
                         var manufactByteArr = ((UInt16[])item["ManufacturerName"]).ToList().Take(3).Select(Convert.ToByte).ToArray();
                         var manufacturerShort = Encoding.UTF8.GetString(manufactByteArr);
                         var instanceName = item["InstanceName"].ToString();
