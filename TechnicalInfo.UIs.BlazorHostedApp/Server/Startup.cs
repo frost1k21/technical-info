@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using TechnicalInfo.Infrastructure.ExcelWriter;
 using TechnicalInfo.Infrastructure.Interfaces;
 using TechnicalInfo.Infrastructure.Wmi;
 using TechnicalInfo.UIs.BlazorHostedApp.Server.Hubs;
@@ -19,6 +20,7 @@ namespace TechnicalInfo.UIs.BlazorHostedApp.Server
             services.AddMvc();
             services.AddSignalR();
             services.AddTransient<IInfoCollectorService, WmiInfoCollectorService>();
+            services.AddTransient<IInfoWriter, ExcelInfoWriter>();
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(

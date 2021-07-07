@@ -51,7 +51,14 @@
                             <td style="width:224px;">@($"{item.Success.Cpu.Name}{Environment.NewLine}Частота: {item.Success.Cpu.Frequency} MHz")</td>
                             <td style="width:154px;">
                                 @((MarkupString)$"Весь объем: {item.Success.Rams.Sum(r => r.Capacity / Math.Pow(1024, 2))}Mb<br/>")
-                                @((MarkupString) string.Join($"<br/>", item.Success.Rams.Select(r => $"Объем: {r.Capacity / Math.Pow(1024, 2)}Mb{Environment.NewLine}Частота: {r.Speed} MHz")))
+                                @((MarkupString) string.Join($"<br/>", item.Success.Rams.Select(r =>
+                                        {
+                                            var ramString = $"Объем: {r.Capacity / Math.Pow(1024, 2)}Mb{Environment.NewLine}Частота: {r.Speed} MHz";
+                                            if (!string.IsNullOrEmpty(r.MemType)) 
+                                                ramString += $"{Environment.NewLine}Тип памяти: {r.MemType}{Environment.NewLine}";
+                                            return ramString;
+                                        }
+                                    )))
                             </td>
                             <td style="width:210px;">@((MarkupString)string.Join($"<br/>", item.Success.VideoAdapters.Select(va => $"{va.Name}<br/>{va.Memory / Math.Pow(1024, 2)} Mb")))</td>
                             <td style="width:245px;">@((MarkupString)string.Join($"<br/>", item.Success.DiskDrives.Select(dd => $"{dd.Name}<br/>{dd.Size / Math.Pow(1024, 3):0.##} Gb")))</td>
