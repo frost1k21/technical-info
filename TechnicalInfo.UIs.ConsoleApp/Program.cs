@@ -41,7 +41,14 @@ namespace TechnicalInfo.UIs.ConsoleApp
             }
             else
             {
-                wsNames = args;
+                if (args.Contains("file"))
+                {
+                    wsNames = File.ReadAllLines(args[1]);
+                } 
+                else
+                {
+                    wsNames = args;
+                }
             }
 
             await GetInformation();
