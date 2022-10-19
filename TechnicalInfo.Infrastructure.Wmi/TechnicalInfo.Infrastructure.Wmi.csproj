@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RemotePrinter\NetworkWsChecker\NetworkWsChecker.csproj" />
     <ProjectReference Include="..\SomeResult\SomeResult.csproj" />
     <ProjectReference Include="..\TechnicalInfo.Infastructure.Interfaces\TechnicalInfo.Infrastructure.Interfaces.csproj" />
     <ProjectReference Include="..\TechnicalInfo.Models\TechnicalInfo.Domain.Models.csproj" />

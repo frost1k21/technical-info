@@ -5,7 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using TechnicalInfo.Infrastructure.Interfaces;
 using SomeResult;
-using NetworkWsCheck;
+using System;
+using System.Net.NetworkInformation;
 
 namespace TechnicalInfo.Infrastructure.Wmi
 {
@@ -38,6 +39,16 @@ namespace TechnicalInfo.Infrastructure.Wmi
             Task.WaitAll(tasks);
 
             return Task.FromResult(_computers.Select(x => x.Value).ToList());
+        }
+    }
+
+    internal class NetworkWsChecker
+    {
+        internal static async Task<bool> WsCheck(string x)
+        {
+            var ping = new Ping();
+            var result = await ping.SendPingAsync(x, 400);
+            return result.Status == IPStatus.Success;
         }
     }
 }
